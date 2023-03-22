@@ -115,9 +115,9 @@ if "response_df" in st.session_state:
     load_table = st.button("Load Table")
 
     if load_table:
-        try: 
+        if 'snowpark_session' in st.session_state: 
             session = st.session_state['snowpark_session']
             sdf = session.create_dataframe(data_editor)
             sdf.write.save_as_table(table_name)
-        except:
+        else:
             st.write("Are you connected to Snowflake?")
